@@ -6,14 +6,13 @@ source.dir = .
 source.include_exts = py,png,jpg,kv,atlas
 version = 0.1
 
-# Requirements - simplified to avoid build errors
-requirements = python3,kivy==2.2.1,google-generativeai,pillow,requests,certifi
+# Requirements: Simplified to ensure the build finishes
+requirements = python3,kivy==2.2.1,requests,certifi
 
 orientation = portrait
-android.permissions = INTERNET, CAMERA, WRITE_EXTERNAL_STORAGE, READ_EXTERNAL_STORAGE
+android.permissions = INTERNET, CAMERA
 android.api = 31
 android.minapi = 21
-android.sdk = 31
 android.ndk = 25b
 android.archs = arm64-v8a
 
