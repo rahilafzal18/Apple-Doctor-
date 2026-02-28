@@ -1,4 +1,4 @@
-name: Final Apple Doctor Build
+name: Apple Doctor Final Build
 on: [push]
 
 jobs:
@@ -7,30 +7,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install System Tools
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y build-essential git python3 python3-dev ffmpeg \
-              libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev \
-              libportmidi-dev libswscale-dev libavformat-dev libavcodec-dev zlib1g-dev \
-              autoconf automake libtool pkg-config libffi-dev libssl-dev m4
-          
-          pip install --user --upgrade buildozer cython==0.29.33 wheel
-
-      - name: Fix Autoconf Macros
-        run: |
-          # Ye command 'LT_SYS_SYMBOL_USCORE' error ko khatam karti hai
-          sudo ln -s /usr/share/aclocal/libtool.m4 /usr/share/aclocal/ltoptions.m4 || true
-          libtoolize --force --copy
-
       - name: Build with Buildozer
-        run: |
-          export PATH=$PATH:$HOME/.local/bin
-          # Licenses accept karke build shuru
-          yes | buildozer android debug
+        # Ye action saare autoconf aur libtool errors ko khud theek rakhta hai
+        uses: ArtemSBulgakov/buildozer-action@v1.6.1
+        with:
+          command: buildozer android debug
+          buildozer_version: master
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: Apple-Doctor-APK
+          name: Apple-Doctor-Final-APK
           path: bin/*.apk
