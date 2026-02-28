@@ -8,7 +8,6 @@ version = 0.1
 requirements = python3,kivy==2.2.1,pillow,requests,certifi
 orientation = portrait
 fullscreen = 0
-
 # Android specific (Fixed Versions)
 android.api = 33
 android.minapi = 21
