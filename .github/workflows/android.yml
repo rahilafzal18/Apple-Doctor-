@@ -14,21 +14,20 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Install dependencies
+      # AAPKA IDEA: Pehle Tools Install Karo
+      - name: PRE-INSTALL TOOLS
         run: |
-          sudo apt-get update
-          sudo apt-get install -y build-essential git python3 python3-dev ffmpeg libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev libportmidi-dev libswscale-dev libavformat-dev libavcodec-dev zlib1g-dev
-          # Cython install karna zaroori hai error hatane ke liye
-          pip install --user --upgrade buildozer cython==0.29.33
+          chmod +x install_tools.sh
+          ./install_tools.sh
 
-      - name: Build with Buildozer
+      # AB COMMAND CHALAYEIN: Tools pehle se hi mil jayenge
+      - name: RUN BUILDOZER COMMAND
         run: |
           export PATH=$PATH:$HOME/.local/bin
-          # Force Cython installation check
           buildozer android debug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: Apple-Doctor-APK
+          name: Apple-Doctor-Final
           path: bin/*.apk
