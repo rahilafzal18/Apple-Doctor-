@@ -1,4 +1,4 @@
-name: Build APK
+name: Build Master APK
 on:
   push:
     branches: [ main ]
@@ -14,25 +14,26 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Install System Tools
+      - name: Install All Tools & Dependencies
         run: |
           sudo apt-get update
-          # Missing tools: libtool, pkg-config, autoconf, automake
+          # Saare tools jo ab tak fail hue, sab yahan hain
           sudo apt-get install -y build-essential git python3 python3-dev ffmpeg \
               libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev \
               libportmidi-dev libswscale-dev libavformat-dev libavcodec-dev zlib1g-dev \
               autoconf automake libtool pkg-config libffi-dev libssl-dev
-
-          pip install --user --upgrade buildozer cython==0.29.33 wheel
+          
+          # Upgrading pip and installing core build tools
+          pip install --user --upgrade pip buildozer cython==0.29.33 wheel
 
       - name: Build with Buildozer
         run: |
           export PATH=$PATH:$HOME/.local/bin
-          # License accept karke build shuru karein
+          # Automatic license acceptance taaki "Aidl" error na aaye
           yes | buildozer android debug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: Apple-Doctor-APK
+          name: Apple-Doctor-Final-APK
           path: bin/*.apk
